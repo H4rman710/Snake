@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
+
+
 public class GamePanel extends JPanel implements ActionListener{
 
     static final int SCREEN_WIDTH = 600;
@@ -30,6 +32,9 @@ public class GamePanel extends JPanel implements ActionListener{
         startGame();
 
     }
+
+    private JButton restartButton;
+
     public void startGame(){
         newApple();
         running = true;
@@ -44,10 +49,12 @@ public class GamePanel extends JPanel implements ActionListener{
     public void draw(Graphics g) {
 
         if (running) {
+            /*
             for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
                 g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
                 g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
             }
+            */
             g.setColor(Color.RED);
             g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
@@ -72,7 +79,7 @@ public class GamePanel extends JPanel implements ActionListener{
     }
     public void newApple(){
         appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
-        appleX = random.nextInt((int)(SCREEN_WIDTH/UNIT_SIZE))*UNIT_SIZE;
+        appleY = random.nextInt((int)(SCREEN_HEIGHT/UNIT_SIZE))*UNIT_SIZE;
 
 
     }
@@ -125,6 +132,25 @@ public class GamePanel extends JPanel implements ActionListener{
             timer.stop();
         }
     }
+
+    private void restartGame() {
+        if (restartButton != null) {
+            remove(restartButton);
+            restartButton = null;
+        }
+
+        bodyParts = 6;
+        applesEaten = 0;
+        direction = 'R';
+        x[0] = 0;
+        y[0] = 0;
+
+        startGame();
+        revalidate();
+        repaint();
+    }
+
+
     public void gameOver(Graphics g){
         //score
         g.setColor(Color.RED);
@@ -137,6 +163,19 @@ public class GamePanel extends JPanel implements ActionListener{
         g.setFont(new Font("Arial", Font.BOLD, 50));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics2.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
+
+        //restart button
+        restartButton = new JButton("Restart");
+        restartButton.setFont(new Font("Arial", Font.BOLD, 30));
+        restartButton.addActionListener(this);
+        restartButton.setBounds((SCREEN_WIDTH / 2) - 75, (SCREEN_HEIGHT / 2) + 50, 150, 100);
+        restartButton.addActionListener(e -> restartGame());
+        setLayout(null); // allow manual positioning
+        add(restartButton);
+        //repaint();
+
+
+
     }
     @Override
     public void actionPerformed(ActionEvent e) {
