@@ -3,8 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-
-
 public class GamePanel extends JPanel implements ActionListener{
 
     static final int SCREEN_WIDTH = 600;
@@ -32,7 +30,6 @@ public class GamePanel extends JPanel implements ActionListener{
         startGame();
 
     }
-
     private JButton restartButton;
 
     public void startGame(){
@@ -50,6 +47,7 @@ public class GamePanel extends JPanel implements ActionListener{
 
         if (running) {
             /*
+            //this code is so that I can see the grid
             for (int i = 0; i < SCREEN_HEIGHT / UNIT_SIZE; i++) {
                 g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
                 g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
@@ -132,7 +130,6 @@ public class GamePanel extends JPanel implements ActionListener{
             timer.stop();
         }
     }
-
     private void restartGame() {
         if (restartButton != null) {
             remove(restartButton);
@@ -149,8 +146,6 @@ public class GamePanel extends JPanel implements ActionListener{
         revalidate();
         repaint();
     }
-
-
     public void gameOver(Graphics g){
         //score
         g.setColor(Color.RED);
@@ -173,8 +168,6 @@ public class GamePanel extends JPanel implements ActionListener{
         setLayout(null); // allow manual positioning
         add(restartButton);
         //repaint();
-
-
 
     }
     @Override
